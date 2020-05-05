@@ -5,12 +5,15 @@ import requests
 from flask import Flask, render_template, request, redirect, json
 from flask_login import current_user, login_user, logout_user, login_required
 from flask_mongoengine import MongoEngineSessionInterface
+from flask_sslify import SSLify
 
 from models import db, User
 
 app = Flask(__name__)
 app.secret_key = os.environ['FLASK_SECRET_KEY']
 app.config['MONGODB_HOST'] = os.environ['MONGODB_HOST']
+
+sslify = SSLify(app)
 
 login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
