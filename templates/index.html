@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>BUNDANG RUNNING CREW</title>
+    <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+</head>
+<body>
+
+{% if logged_in %} <a href="logout">Logout</a>{% endif %}
+<a id="kakao-login-btn" {% if logged_in %} hidden {% endif %}></a>
+
+<script type="text/javascript">
+    Kakao.init('8a6e5656736253a2984b0050d1bb1ece')
+    Kakao.Auth.createLoginButton({
+        container: '#kakao-login-btn',
+        success: login,
+        fail: function (err) {
+            alert('failed to login: ' + JSON.stringify(err))
+        },
+    })
+
+    function login(data) {
+        var form = document.createElement('form');
+        form.setAttribute('method', 'post');
+        form.setAttribute('action', 'login');
+        document.charset = "utf-8";
+
+        var hiddenField = document.createElement('input');
+        hiddenField.setAttribute('type', 'hidden');
+        hiddenField.setAttribute('name', 'data');
+        hiddenField.setAttribute('value', JSON.stringify(data));
+        form.appendChild(hiddenField);
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+</script>
+
+</body>
+</html>
