@@ -8,14 +8,22 @@
     <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 </head>
 <body>
-
-{% if logged_in %} <a href="logout">Logout</a>{% endif %}
-<a id="kakao-login-btn" {% if logged_in %} hidden {% endif %}></a>
+<div style="width:fit-content;height:fit-content;margin:auto;position:absolute;top:0;bottom:0;left:0;right:0;text-align:center;">
+    {% if logged_in %}
+        <a href="logout">Logout</a>
+        <a id="kakao-login-btn" hidden></a>
+    {% else %}
+        <img src="https://raw.githubusercontent.com/tension-lab/brc-web/blob/master/static/logo.png" width="50%" alt="">
+        <br/><br/>
+        <a id="kakao-login-btn"></a>
+    {% endif %}
+</div>
 
 <script type="text/javascript">
     Kakao.init('8a6e5656736253a2984b0050d1bb1ece')
     Kakao.Auth.createLoginButton({
         container: '#kakao-login-btn',
+        size: 'medium',
         success: login,
         fail: function (err) {
             alert('failed to login: ' + JSON.stringify(err))
