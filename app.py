@@ -3,15 +3,19 @@ import os
 import flask_login
 import requests
 from flask import Flask, render_template, request, redirect, json
-from flask_login import current_user, login_user, logout_user, login_required
+from flask_login import current_user, login_user, logout_user
 from flask_mongoengine import MongoEngineSessionInterface
 from flask_sslify import SSLify
 
-from models import db, User
+import run_page
+import user_page
+from models import db, User, Run
 
 app = Flask(__name__)
 app.secret_key = os.environ['FLASK_SECRET_KEY']
 app.config['MONGODB_HOST'] = os.environ['MONGODB_HOST']
+app.register_blueprint(user_page.blueprint)
+app.register_blueprint(run_page.blueprint)
 
 sslify = SSLify(app)
 
@@ -24,14 +28,10 @@ app.session_interface = MongoEngineSessionInterface(db)
 
 @app.route('/')
 def index():
-    print(current_user.get_id())
-    return render_template('index.html', logged_in=current_user.is_authenticated)
-
-
-@app.route('/my')
-@login_required
-def my_info():
-    return "", 200
+    if not current_user.is_authenticated:
+        return render_template('index.html', logged_in=current_user.is_authenticated)
+    posts = Run.objects.all()
+    return render_template('run.html', posts=posts, is_admin=current_user.is_admin)
 
 
 @app.route('/login', methods=['POST'])
@@ -43,11 +43,15 @@ def login():
     print(me)
     user_id = str(me['id'])
     nickname = me['kakao_account']['profile']['nickname']
+    thumbnail = me['kakao_account']['profile']['thumbnail_image_url']
 
     user = User.objects(user_id=user_id).first()
     if user is None:
-        user = User(user_id=user_id, nickname=nickname)
+        user = User(user_id=user_id, nickname=nickname, thumbnail=thumbnail)
         user.save()
+    else:
+        if user.thumbnail != thumbnail:
+            user.update(thumbnail=thumbnail)
     login_user(user, remember=True)
 
     return redirect('/')
