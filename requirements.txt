@@ -4,4 +4,3 @@ flask_mongoengine
 requests
 dnspython
 flask_sslify
-gunicorn
