@@ -5,7 +5,6 @@ import requests
 from flask import Flask, render_template, request, redirect, json
 from flask_login import current_user, login_user, logout_user
 from flask_mongoengine import MongoEngineSessionInterface
-from flask_sslify import SSLify
 
 import run_page
 import user_page
@@ -16,8 +15,6 @@ app.secret_key = os.environ['FLASK_SECRET_KEY']
 app.config['MONGODB_HOST'] = os.environ['MONGODB_HOST']
 app.register_blueprint(user_page.blueprint)
 app.register_blueprint(run_page.blueprint)
-
-sslify = SSLify(app)
 
 login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
