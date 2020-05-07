@@ -3,4 +3,3 @@ flask_login
 flask_mongoengine
 requests
 dnspython
-flask_sslify

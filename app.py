@@ -40,7 +40,7 @@ def login():
     print(me)
     user_id = str(me['id'])
     nickname = me['kakao_account']['profile']['nickname']
-    thumbnail = me['kakao_account']['profile']['thumbnail_image_url']
+    thumbnail = me['kakao_account']['profile']['thumbnail_image_url'].replace("http://", "https://", 1)
 
     user = User.objects(user_id=user_id).first()
     if user is None:
