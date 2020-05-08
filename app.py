@@ -28,7 +28,7 @@ def index():
     if not current_user.is_authenticated:
         return render_template('index.html', logged_in=current_user.is_authenticated)
     posts = Run.objects.all()
-    return render_template('run.html', posts=posts, is_admin=current_user.is_admin)
+    return render_template('run_list.html', posts=posts, is_admin=current_user.is_admin)
 
 
 @app.route('/login', methods=['POST'])

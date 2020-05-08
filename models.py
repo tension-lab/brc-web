@@ -30,5 +30,5 @@ class Run(db.Document):
 class Apply(db.Document):
     post_id = db.StringField()
     user_id = db.StringField()
-    # check = db.BooleanField()
+    user = db.ReferenceField(User)
     # no_show = db.BooleanField()
