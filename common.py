@@ -6,10 +6,10 @@ from flask_login import current_user, login_required
 def admin_required(func):
     @login_required
     @wraps(func)
-    def decorated():
+    def decorated(*args, **kwargs):
         if not current_user.is_admin:
             return '권한이 없어... 돌아가...', 401
-        return func()
+        return func(*args, **kwargs)
 
     return decorated
 
@@ -17,9 +17,9 @@ def admin_required(func):
 def member_required(func):
     @login_required
     @wraps(func)
-    def decorated():
+    def decorated(*args, **kwargs):
         if not current_user.is_member:
             return '권한이 없어... 돌아가...', 401
-        return func()
+        return func(*args, **kwargs)
 
     return decorated

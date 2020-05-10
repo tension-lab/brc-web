@@ -8,16 +8,16 @@ blueprint = Blueprint('user_page', __name__)
 
 @blueprint.route('/member')
 @admin_required
-def member():
+def user_list():
     users = User.objects(is_member=True).order_by('+is_admin', '+nickname')
-    return render_template('user.html', users=users)
+    return render_template('user_list.html', users=users)
 
 
 @blueprint.route('/guest')
 @admin_required
 def guest():
     users = User.objects(is_member__ne=True)
-    return render_template('user.html', users=users)
+    return render_template('user_list.html', users=users)
 
 
 @blueprint.route('/promote', methods=['POST'])

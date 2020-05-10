@@ -1,0 +1,27 @@
+{% include "header.html" %}
+
+<table class="table">
+    {% for user in users %}
+        <tr>
+            <td>
+                <img src="{{ user.thumbnail }}" width="30" style="border-radius: 30%">
+            </td>
+            <td>{{ user.nickname }}</td>
+            <td>
+                {% if user.is_member %}
+                <form method="post" action="/leave">
+                    <input type="text" name="user_id" value="{{ user.user_id }}" hidden>
+                    <input type="submit" class="btn btn-danger" value="탈퇴"/>
+                </form>
+                {% else %}
+                <form method="post" action="/promote">
+                    <input type="text" name="user_id" value="{{ user.user_id }}" hidden>
+                    <input type="submit" class="btn btn-success" value="정회원으로"/>
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+
+{% include "footer.html" %}

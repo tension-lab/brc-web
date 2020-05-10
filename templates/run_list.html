@@ -1,39 +1,26 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="utf-8"/>
-    <meta name="viewport"
-          content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
-    <title>BUNDANG RUNNING CREW</title>
-    <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-</head>
-<body>
-<a href="logout">Logout</a><br><br>
-<a href="/">Run</a><br>
-<a href="member">Member</a><br>
-<a href="guest">Guest</a>
-<div style="width:fit-content;height:fit-content;margin:auto;position:absolute;top:-20%;bottom:0;left:0;right:0;text-align:center;">
+{% include "header.html" %}
 
-    <table>
-        {% for post in posts %}
-            <tr>
-                <td>
-                    {{ post.id }}
-                </td>
-                <td>
-                    <a href="run/{{ post.id }}">{{ post.title }}</a>
-                </td>
-            </tr>
-        {% endfor %}
-    </table>
+<table class="table">
+    {% for run in runs %}
+        <tr>
+            <td>
+                {{ run.time }}
+            </td>
+            <td>
+                <a href="run/{{ run.id }}">{{ run.title }}</a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
 
-    {% if is_admin %}
-        <br>
-        <form method="post" action="run/write">
-            <input type="text" name="data" value="정기런 제목">
-            <input type="submit" value="정기런 열기"/>
-        </form>
-    {% endif %}
-</div>
-</body>
-</html>
+{% if is_admin %}
+    <form method="post" action="run/write">
+        <div class="form-group">
+            <label for="InputTitle">정기런 이름</label>
+            <input type="text" class="form-control" id="InputTitle" name="data">
+        </div>
+        <button type="submit" class="btn btn-primary">만들기</button>
+    </form>
+{% endif %}
+
+{% include "footer.html" %}

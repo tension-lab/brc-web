@@ -1,4 +1,5 @@
 import os
+from datetime import datetime, timedelta
 
 import flask_login
 import requests
@@ -27,8 +28,8 @@ app.session_interface = MongoEngineSessionInterface(db)
 def index():
     if not current_user.is_authenticated:
         return render_template('index.html', logged_in=current_user.is_authenticated)
-    posts = Run.objects.all()
-    return render_template('run_list.html', posts=posts, is_admin=current_user.is_admin)
+    runs = Run.objects(time__gt=datetime.now() - timedelta(hours=4)).order_by('+time')
+    return render_template('run_list.html', runs=runs, is_admin=current_user.is_admin)
 
 
 @app.route('/login', methods=['POST'])

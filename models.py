@@ -23,12 +23,12 @@ class User(db.Document):
 
 class Run(db.Document):
     title = db.StringField()
+    time = db.DateTimeField()
     # group = db.ListField(db.StringField())
     # content = db.StringField()
 
 
 class Apply(db.Document):
-    post_id = db.StringField()
-    user_id = db.StringField()
+    run_id = db.StringField()
     user = db.ReferenceField(User)
     # no_show = db.BooleanField()
