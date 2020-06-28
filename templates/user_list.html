@@ -1,4 +1,8 @@
-{% include "header.html" %}
+<!DOCTYPE html>
+<html lang="ko">
+{% include "common/head.html" %}
+<body>
+{% include "common/menu.html" %}
 
 <table class="table text-center">
     {% for user in users %}
@@ -9,19 +13,20 @@
             <td>{{ user.nickname }}</td>
             <td>
                 {% if user.is_member %}
-                <form method="post" action="/leave">
-                    <input type="text" name="user_id" value="{{ user.user_id }}" hidden>
-                    <input type="submit" class="btn btn-danger" value="탈퇴"/>
-                </form>
+                    <form method="post" action="/leave">
+                        <input type="text" name="user_id" value="{{ user.user_id }}" hidden>
+                        <input type="submit" class="btn btn-danger" value="탈퇴"/>
+                    </form>
                 {% else %}
-                <form method="post" action="/promote">
-                    <input type="text" name="user_id" value="{{ user.user_id }}" hidden>
-                    <input type="submit" class="btn btn-success" value="정회원으로"/>
-                </form>
+                    <form method="post" action="/promote">
+                        <input type="text" name="user_id" value="{{ user.user_id }}" hidden>
+                        <input type="submit" class="btn btn-success" value="정회원으로"/>
+                    </form>
                 {% endif %}
             </td>
         </tr>
     {% endfor %}
 </table>
 
-{% include "footer.html" %}
+</body>
+</html>

@@ -1,4 +1,8 @@
-{% include "header.html" %}
+<!DOCTYPE html>
+<html lang="ko">
+{% include "common/head.html" %}
+<body>
+{% include "common/menu.html" %}
 
 <table class="table">
     {% for run in runs %}
@@ -23,4 +27,5 @@
     </form>
 {% endif %}
 
-{% include "footer.html" %}
+</body>
+</html>
