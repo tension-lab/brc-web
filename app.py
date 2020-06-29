@@ -10,7 +10,7 @@ from models import db, User, Run
 
 app = Flask(__name__)
 app.secret_key = os.environ['FLASK_SECRET_KEY']
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['SQLALCHEMY_DATABASE_URI']
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.register_blueprint(user_page.blueprint)
 app.register_blueprint(run_page.blueprint)
