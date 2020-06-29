@@ -7,8 +7,14 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
             <a class="nav-item nav-link" href="/">Run</a>
-            <a class="nav-item nav-link" href="/member">Member</a>
-            <a class="nav-item nav-link" href="/guest">Guest</a>
+            {% if current_user.is_member %}
+                <a class="nav-item nav-link" href="/">Bingo</a>
+            {% endif %}
+            {% if current_user.is_admin %}
+                <a class="nav-item nav-link" href="/member">Member</a>
+                <a class="nav-item nav-link" href="/guest">Guest</a>
+                <a class="nav-item nav-link" href="/debug">Debug</a>
+            {% endif %}
         </div>
     </div>
 </nav>

@@ -7,8 +7,8 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nickname = db.Column(db.String)
     thumbnail = db.Column(db.String)
-    is_member = db.Column(db.Boolean)
-    is_admin = db.Column(db.Boolean)
+    is_member = db.Column(db.Boolean, nullable=False, default=False)
+    is_admin = db.Column(db.Boolean, nullable=False, default=False)
 
     is_authenticated = True
     is_active = True

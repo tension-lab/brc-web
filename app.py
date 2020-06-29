@@ -1,9 +1,11 @@
 import os
+
 import flask_login
 import requests
 from flask import Flask, render_template, request, redirect, json
 from flask_login import current_user, login_user, logout_user
 
+import debug_page
 import run_page
 import user_page
 from models import db, User, Run
@@ -14,6 +16,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.register_blueprint(user_page.blueprint)
 app.register_blueprint(run_page.blueprint)
+app.register_blueprint(debug_page.blueprint)
 
 login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
@@ -37,9 +40,11 @@ def login():
     me = res.json()
     print(me)
     user_id = str(me['id'])
-    nickname = me['kakao_account']['profile']['nickname']
-    thumbnail = me['kakao_account']['profile']['thumbnail_image_url'].replace("http://", "https://", 1)
-
+    profile = me['kakao_account']['profile']
+    nickname = profile['nickname']
+    thumbnail = None
+    if 'thumbnail_image_url' in profile:
+        thumbnail = me['kakao_account']['profile']['thumbnail_image_url'].replace("http://", "https://", 1)
     user = User.query.filter_by(id=user_id).first()
     if user is None:
         user = User(id=user_id, nickname=nickname, thumbnail=thumbnail)

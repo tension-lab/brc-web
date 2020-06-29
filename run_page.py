@@ -32,4 +32,9 @@ def run_detail(run_id):
     run = Run.query.filter_by(id=run_id).first()
     if run is None:
         return '없어진 달리기...'
-    return render_template('run_detail.html', run=run, applies=run.applies)
+    is_apply = False
+    for apply in run.applies:
+        if apply.user_id == current_user.id:
+            is_apply = True
+            break
+    return render_template('run_detail.html', run=run, is_apply=is_apply)

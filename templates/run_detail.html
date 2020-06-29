@@ -15,18 +15,20 @@
             {{ run.title }}
         </td>
     </tr>
-    <tr>
-        <td>
-            <form method="post" action="/run/apply">
-                <input type="text" name="run_id" value="{{ run.id }}" hidden>
-                <input type="submit" class="btn btn-primary" value="참석"/>
-            </form>
-        </td>
-    </tr>
+    {% if not is_apply %}
+        <tr>
+            <td>
+                <form method="post" action="/run/apply">
+                    <input type="text" name="run_id" value="{{ run.id }}" hidden>
+                    <input type="submit" class="btn btn-primary" value="참석"/>
+                </form>
+            </td>
+        </tr>
+    {% endif %}
     <tr>
         <td>
             참석자 :
-            {% for apply in applies %}
+            {% for apply in run.applies %}
                 {{ apply.user.nickname }}
             {% endfor %}
         </td>
