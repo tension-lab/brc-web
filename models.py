@@ -4,7 +4,7 @@ db = SQLAlchemy()
 
 
 class User(db.Model):
-    id = db.Column(db.Integer, db.ForeignKey('run.id'), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     nickname = db.Column(db.String)
     thumbnail = db.Column(db.String)
     is_member = db.Column(db.Boolean)

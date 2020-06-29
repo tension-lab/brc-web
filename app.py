@@ -19,7 +19,6 @@ login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
 
 db.init_app(app)
-# db.create_all(app=app)
 
 
 @app.route('/')
