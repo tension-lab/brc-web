@@ -1,5 +1,4 @@
 flask
 flask_login
-flask_mongoengine
+flask_sqlalchemy
 requests
-dnspython

@@ -3,7 +3,6 @@ import flask_login
 import requests
 from flask import Flask, render_template, request, redirect, json
 from flask_login import current_user, login_user, logout_user
-from flask_mongoengine import MongoEngineSessionInterface
 
 import run_page
 import user_page
@@ -11,7 +10,8 @@ from models import db, User, Run
 
 app = Flask(__name__)
 app.secret_key = os.environ['FLASK_SECRET_KEY']
-app.config['MONGODB_HOST'] = os.environ['MONGODB_HOST']
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['SQLALCHEMY_DATABASE_URI']
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.register_blueprint(user_page.blueprint)
 app.register_blueprint(run_page.blueprint)
 
@@ -19,14 +19,14 @@ login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
 
 db.init_app(app)
-app.session_interface = MongoEngineSessionInterface(db)
+# db.create_all(app=app)
 
 
 @app.route('/')
 def index():
     if not current_user.is_authenticated:
         return render_template('index.html', logged_in=current_user.is_authenticated)
-    runs = Run.objects().order_by('-time')
+    runs = Run.query.order_by(Run.time)
     return render_template('run_list.html', runs=runs, is_admin=current_user.is_admin)
 
 
@@ -41,13 +41,15 @@ def login():
     nickname = me['kakao_account']['profile']['nickname']
     thumbnail = me['kakao_account']['profile']['thumbnail_image_url'].replace("http://", "https://", 1)
 
-    user = User.objects(user_id=user_id).first()
+    user = User.query.filter_by(id=user_id).first()
     if user is None:
-        user = User(user_id=user_id, nickname=nickname, thumbnail=thumbnail)
-        user.save()
+        user = User(id=user_id, nickname=nickname, thumbnail=thumbnail)
+        db.session.add(user)
+        db.session.commit()
     else:
         if user.thumbnail != thumbnail:
-            user.update(thumbnail=thumbnail)
+            user.thumbnail = thumbnail
+            db.session.commit()
     login_user(user, remember=True)
 
     return redirect('/')
@@ -61,7 +63,7 @@ def logout():
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.objects(user_id=user_id).first()
+    return User.query.filter_by(id=user_id).first()
 
 
 if __name__ == '__main__':
