@@ -5,6 +5,7 @@ import requests
 from flask import Flask, render_template, request, redirect, json
 from flask_login import current_user, login_user, logout_user
 
+import bingo_page
 import debug_page
 import run_page
 import user_page
@@ -16,6 +17,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.register_blueprint(user_page.blueprint)
 app.register_blueprint(run_page.blueprint)
+app.register_blueprint(bingo_page.blueprint)
 app.register_blueprint(debug_page.blueprint)
 
 login_manager = flask_login.LoginManager()
@@ -27,9 +29,10 @@ db.init_app(app)
 @app.route('/')
 def index():
     if not current_user.is_authenticated:
-        return render_template('index.html', logged_in=current_user.is_authenticated)
-    runs = Run.query.order_by(Run.time)
-    return render_template('run_list.html', runs=runs, is_admin=current_user.is_admin)
+        return render_template('index.html')
+    # runs = Run.query.order_by(Run.time)
+    # return render_template('run_list.html', runs=runs)
+    return render_template('bingo.html')
 
 
 @app.route('/login', methods=['POST'])

@@ -17,8 +17,8 @@
     {% endfor %}
 </table>
 
-{% if is_admin %}
-    <form method="post" action="run/write">
+{% if current_user.is_admin %}
+    <form method="post" action="/run/write">
         <div class="form-group">
             <label for="InputTitle">정기런 이름</label>
             <input type="text" class="form-control" id="InputTitle" name="data">

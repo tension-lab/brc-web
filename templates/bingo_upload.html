@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko">
+{% include "common/head.html" %}
+<body>
+{% include "common/menu.html" %}
+
+<script src="/static/dropzone/dropzone.min.js"></script>
+<link rel="stylesheet" href="/static/dropzone/dropzone.min.css">
+
+<img src="/static/bingo/{{ current_user.id }}/{{ number }}" alt="{{ number }}"/>
+<form id="dropzone" action="/bingo/{{ number }}/upload" class="dropzone"></form>
+
+<script>
+    Dropzone.options.dropzone = {
+        maxFiles: 1,
+        resizeWidth: 1024,
+        resizeHeight: 1024,
+    };
+</script>
+
+</body>
+</html>
