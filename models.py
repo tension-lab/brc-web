@@ -30,6 +30,16 @@ class Run(db.Model):
 class Apply(db.Model):
     run_id = db.Column(db.Integer, db.ForeignKey('run.id'), primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
-    time = db.Column(db.DateTime)
+    time = db.Column(db.DateTime, nullable=False)
     user = db.relationship('User')
     # no_show = db.BooleanField()
+
+
+class Bingo(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    number = db.Column(db.Integer, nullable=False)
+    time = db.Column(db.DateTime, nullable=False)
+    image = db.Column(db.String, nullable=False)
+    check = db.Column(db.Boolean)
+    user = db.relationship('User')

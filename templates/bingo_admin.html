@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+{% include "common/head.html" %}
+<body>
+{% include "common/menu.html" %}
+
+{% if bingo %}
+    <table>
+        <tr>
+            <td>{{ bingo.user.nickname }}</td>
+        </tr>
+        <tr>
+            <td>{{ description[bingo.number - 1] }}</td>
+        </tr>
+        <tr>
+            <td>{{ bingo.time }}</td>
+        </tr>
+        <tr>
+            <td><img src="{{ bingo.image }}" alt="{{ bingo.user.nickname }}"></td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/bingo/admin/success">성공</a>
+            </td>
+            <td>
+                <a href="/bingo/admin/fail">실패</a>
+            </td>
+        </tr>
+
+    </table>
+{% endif %}
+
+</body>
+</html>

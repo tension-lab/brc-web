@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+{% include "common/head.html" %}
+<body>
+{% include "common/menu.html" %}
+
+{% if bingo %}
+    <img src="{{ bingo.image }}" alt="{{ bingo.user.nickname }}"/>
+{% endif %}
+
+{% if bingo.check != True %}
+    <script src="/static/dropzone/dropzone.min.js"></script>
+    <link rel="stylesheet" href="/static/dropzone/dropzone.min.css">
+
+    <form id="dropzone" action="/bingo/{{ number }}/upload" class="dropzone"></form>
+
+    <script>
+        Dropzone.options.dropzone = {
+            maxFiles: 1,
+            resizeWidth: 1024,
+            resizeHeight: 1024,
+        };
+    </script>
+{% endif %}
+
+</body>
+</html>

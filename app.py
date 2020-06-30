@@ -32,7 +32,7 @@ def index():
         return render_template('index.html')
     # runs = Run.query.order_by(Run.time)
     # return render_template('run_list.html', runs=runs)
-    return render_template('bingo.html')
+    return redirect('/bingo')
 
 
 @app.route('/login', methods=['POST'])
