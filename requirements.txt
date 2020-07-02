@@ -1,5 +1,6 @@
 flask
 flask_login
 flask_sqlalchemy
+flask_admin
 requests
 psycopg2-binary
