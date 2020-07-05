@@ -35,11 +35,7 @@ admin.add_view(ModelView(Bingo, db.session))
 
 @app.route('/')
 def index():
-    if not current_user.is_authenticated:
-        return render_template('index.html')
-    # runs = Run.query.order_by(Run.time)
-    # return render_template('run_list.html', runs=runs)
-    return redirect('/bingo')
+    return render_template('index.html')
 
 
 @app.route('/login', methods=['POST'])

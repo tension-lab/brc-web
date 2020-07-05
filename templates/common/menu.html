@@ -1,20 +1,3 @@
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
-    <a class="navbar-brand" href="/">Bundang Running Crew</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-            {% if current_user.is_member %}
-                <a class="nav-item nav-link" href="/bingo">Bingo</a>
-            {% endif %}
-            {% if current_user.is_admin %}
-                <a class="nav-item nav-link" href="/bingo/admin">Bingo Admin</a>
-                <a class="nav-item nav-link" href="/member">Member</a>
-                <a class="nav-item nav-link" href="/guest">Guest</a>
-                <a class="nav-item nav-link" href="/debug">Debug</a>
-            {% endif %}
-        </div>
-    </div>
+    <a class="navbar-brand" href="/"><img src="/static/logo.png" width="50px" alt=""></a>
 </nav>
