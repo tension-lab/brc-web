@@ -9,8 +9,6 @@ from models import Run, Apply, db
 blueprint = Blueprint('run_page', __name__)
 
 
-
-
 @blueprint.route('/run')
 def run_list():
     run = Run.query.order_by(Run.time).first()
@@ -44,3 +42,25 @@ def run_detail(run_id):
         return '없어진 달리기...'
     apply_list = Apply.query.filter_by(run_id=run.id)
     return render_template('run_detail.html', run=run, apply_list=apply_list)
+
+
+@blueprint.route('/run/<run_id>/apply/<user_id>')
+@admin_required
+def attend(run_id, user_id):
+    apply = Apply.query.filter_by(run_id=run_id, user_id=user_id).first()
+    if apply is None:
+        return '참석하지 않음'
+    apply.approved = True
+    db.session.commit()
+    return redirect(f'/run/{run_id}')
+
+
+@blueprint.route('/run/<run_id>/noshow/<user_id>')
+@admin_required
+def no_show(run_id, user_id):
+    apply = Apply.query.filter_by(run_id=run_id, user_id=user_id).first()
+    if apply is None:
+        return '참석하지 않음'
+    apply.approved = False
+    db.session.commit()
+    return redirect(f'/run/{run_id}')

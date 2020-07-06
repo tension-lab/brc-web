@@ -14,9 +14,11 @@
             {% else %}
             <img src='/static/logo.png' width="30" style="border-radius: 30%" />
             {% endif %}
-            <span>{{apply.user.nickname}}</span>
-            <button class="btn m-1 bg-warning text-center"><a href="#/apply/{{apply.id}}" class="text-light">참석</a></button>
-            <button class="btn m-1 bg-danger text-center"><a href="#/apply/{{apply.id}}" class="text-light">노쇼</a></button>
+            <span>{{ apply.user.nickname }}{{ "🤙" if apply.approved }}</span>
+            <button class="btn m-1 bg-warning text-center"><a href="{{ run.id }}/apply/{{ apply.user_id }}"
+                                                              class="text-light">참석</a></button>
+            <button class="btn m-1 bg-danger text-center"><a href="{{ run.id }}/noshow/{{ apply.user_id }}"
+                                                             class="text-light">노쇼</a></button>
         </li>
     {% endfor %}
 </ul>
