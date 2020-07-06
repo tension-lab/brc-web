@@ -1,31 +1,36 @@
 <!DOCTYPE html>
 <html lang="ko">
-{% include "common/head.html" %}
-<body>
-{% include "common/menu.html" %}
-
-<table class="table">
-    {% for run in runs %}
-        <tr>
-            <td>
-                {{ run.time }}
-            </td>
-            <td>
-                <a href="run/{{ run.id }}">{{ run.title }}</a>
-            </td>
-        </tr>
-    {% endfor %}
-</table>
-
-{% if current_user.is_admin %}
-    <form method="post" action="/run/write">
-        <div class="form-group">
-            <label for="InputTitle">정기런 이름</label>
-            <input type="text" class="form-control" id="InputTitle" name="data">
+    {% include "common/head.html" %}
+    <body>
+    {% include "common/menu.html" %}
+    <div class="card">
+        <img class="card-img-top" src="/static/run_85.jpg">
+        <div class="card-body">
+            <h5 class="card-title">{{ run.title }}</h5>
+            <h6>{{ run.time }}</h6>
+            {% if not is_apply %}
+                <form method="post" action="/run/apply">
+                    <input type="text" name="run_id" value="{{ run.id }}" hidden>
+                    <input type="submit" class="btn btn-primary" value="참석"/>
+                </form>
+            {% else %}
+                <span>참가신청완료</span>
+            {% endif %}
+            {% if current_user.is_admin %}
+                <div>
+                    <button class="btn m-1 bg-warning text-center"><a href="/run/{{run.id}}" class="text-light">출석체크</a></button>
+                </div>
+            {% endif %}
         </div>
-        <button type="submit" class="btn btn-primary">만들기</button>
-    </form>
-{% endif %}
-
-</body>
+    </div>
+    <!-- {% if current_user.is_admin %}
+        <form method="post" action="/run/write">
+            <div class="form-group">
+                <label for="InputTitle">정기런 이름</label>
+                <input type="text" class="form-control" id="InputTitle" name="data">
+            </div>
+            <button type="submit" class="btn btn-primary">만들기</button>
+        </form>
+    {% endif %} -->
+    </body>
 </html>

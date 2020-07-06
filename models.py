@@ -22,7 +22,6 @@ class Run(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String)
     time = db.Column(db.DateTime)
-    applies = db.relationship('Apply')
     group_id = db.Column(db.String)
     description = db.Column(db.String)
 
@@ -32,6 +31,7 @@ class Apply(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
     time = db.Column(db.DateTime, nullable=False)
     user = db.relationship('User')
+    run = db.relationship('Run')
     # no_show = db.BooleanField()
 
 
