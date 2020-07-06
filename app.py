@@ -44,7 +44,6 @@ def login():
     access_token = data['access_token']
     res = requests.get('https://kapi.kakao.com/v2/user/me', headers={'Authorization': f'Bearer {access_token}'})
     me = res.json()
-    print(me)
     user_id = str(me['id'])
     profile = me['kakao_account']['profile']
     nickname = profile['nickname']
