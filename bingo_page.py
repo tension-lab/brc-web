@@ -42,6 +42,7 @@ def do_upload(number):
     if bingo:
         bingo.time = datetime.now()
         bingo.image = path
+        bingo.check = None
     else:
         bingo = Bingo(user_id=current_user.id, number=number, time=datetime.now(), image=path)
         db.session.add(bingo)
