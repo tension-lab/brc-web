@@ -4,13 +4,13 @@ import flask_login
 import requests
 from flask import Flask, render_template, request, redirect, json
 from flask_admin import Admin
-from flask_admin.contrib.sqla import ModelView
-from flask_login import current_user, login_user, logout_user
+from flask_login import login_user, logout_user
 
 import bingo_page
 import debug_page
 import run_page
 import user_page
+from admin import AdminModelView
 from models import db, User, Run, Apply, Bingo
 
 app = Flask(__name__)
@@ -27,10 +27,10 @@ login_manager.init_app(app)
 
 db.init_app(app)
 admin = Admin(app, template_mode='bootstrap3')
-admin.add_view(ModelView(User, db.session))
-admin.add_view(ModelView(Run, db.session))
-admin.add_view(ModelView(Apply, db.session))
-admin.add_view(ModelView(Bingo, db.session))
+admin.add_view(AdminModelView(User, db.session))
+admin.add_view(AdminModelView(Run, db.session))
+admin.add_view(AdminModelView(Apply, db.session))
+admin.add_view(AdminModelView(Bingo, db.session))
 
 
 @app.route('/')
