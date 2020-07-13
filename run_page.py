@@ -11,7 +11,7 @@ blueprint = Blueprint('run_page', __name__)
 
 @blueprint.route('/run')
 def run_list():
-    run = Run.query.order_by(Run.time).first()
+    run = Run.query.order_by(Run.time.desc()).first()
     is_apply = Apply.query.filter_by(run_id=run.id, user_id=current_user.id).first()
     return render_template('run_list.html', run=run, is_apply=is_apply)
 
@@ -58,7 +58,7 @@ def attend(run_id, user_id):
 @blueprint.route('/run/<run_id>/noshow/<user_id>')
 @admin_required
 def no_show(run_id, user_id):
-    apply = Apply.query.filter_by(run_id=run_id, user_id=user_id).first()
+    apply = Apply.query.filter_by(run_id=run_id, user_id=user_id).order_by(Apply.approved).first()
     if apply is None:
         return '참석하지 않음'
     apply.approved = False
